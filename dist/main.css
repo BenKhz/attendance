@@ -1,3 +1,9 @@
 * {
   border: 1px rebeccapurple dashed;
 }
+
+.dial {
+  position: fixed;
+  bottom: 2vh;
+  right: 2vw;
+}
