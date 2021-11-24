@@ -7,7 +7,7 @@ const AttendView = () => {
   return (
     <>
     <Selector />
-    <Grid container justifyContent="center">
+    <Grid container>
       <Grid item>
         <div id='attendView'> This is the Attendance view
           <Link to='/enrollView'>

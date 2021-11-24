@@ -1,32 +1,13 @@
 import React, {useState} from 'react';
-// import {Button} from '@mui/material'
-
-// const Login = ({setLoggedIn}) => {
-//   return (
-//       <div id="login">
-//         You're on the Login Page!
-//           <Button onClick={()=>{ setLoggedIn(true)}}> Click Me! </Button>
-//         Build Login Splash Page here! How do we do it?
-//         Lets use passport.js to define our auth strategies!
-//       </div>
-//     )
-// }
-
-// export default Login;
-
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import Switch from '@mui/material/Switch';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import {
+  Button,
+  TextField,
+  FormControlLabel,
+  Box,
+  Typography,
+  Container,
+  Switch } from '@mui/material'
 import {Navigate} from 'react-router-dom';
-
-const theme = createTheme();
 
 export default function Login({isLoggedIn, setLoggedIn}) {
 
@@ -46,9 +27,7 @@ export default function Login({isLoggedIn, setLoggedIn}) {
   }
 
   return (
-    <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
-        <CssBaseline />
         <Box
           sx={{
             marginTop: 8,
@@ -81,7 +60,7 @@ export default function Login({isLoggedIn, setLoggedIn}) {
               id="password"
               autoComplete="current-password"
             />
-            <Container justifyContent="center">
+            <Container >
             <FormControlLabel
               control={<Switch onChange={() => {setSignup(prev => !prev)}}/>}
               label="New User?"
@@ -98,7 +77,6 @@ export default function Login({isLoggedIn, setLoggedIn}) {
           </Box>
         </Box>
       </Container>
-    </ThemeProvider>
   );
 }
 

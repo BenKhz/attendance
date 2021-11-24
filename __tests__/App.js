@@ -1,7 +1,9 @@
-// import App from '../src/App'
+import App from '../src/App'
 
-// TODO: setup jest with webpack configs.
-//
+
+beforeAll(()=>{
+  console.log("Before All in App test")
+})
 
 
 test('App should initialize with isLoggedIn = false, and currentEnroll = []', ()=>{

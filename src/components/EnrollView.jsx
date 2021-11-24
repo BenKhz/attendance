@@ -8,7 +8,7 @@ const EnrollView = () => {
   return (
     <>
     <Selector />
-    <Grid container size={12} justifyContent="center" alignItems="center" >
+    <Grid container size={12} >
       <Grid item alignItems="center">
       <TextField
               margin="normal"
