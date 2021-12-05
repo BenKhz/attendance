@@ -1,18 +1,26 @@
-import React from 'react';
-import {Link} from 'react-router-dom'
-import {Button, Grid} from '@mui/material'
+import React, {useState} from 'react';
+import {Button, Grid, Switch} from '@mui/material'
 import Selector from './Selector.jsx';
 
-const AttendView = () => {
+const AttendView = ({currentEnroll, setEnroll}) => {
+  const [present, setPresent] = useState([]);
+  const attendSwitches = currentEnroll.map(each => {
+    return (
+      <>
+      <div>
+        {each}
+      </div>
+      <Switch />
+      </>
+    )
+  })
   return (
     <>
     <Selector />
     <Grid container>
       <Grid item>
-        <div id='attendView'> This is the Attendance view
-          <Link to='/enrollView'>
-              <Button onClick={()=>{ console.log('Clicked!')}}> Click Me! </Button>
-          </Link>
+        <div id='attendView'>
+          {attendSwitches}
         </div>
       </Grid>
     </Grid>

@@ -26,11 +26,6 @@ const EnrollView = () => {
       />
       <Button onClick={()=>{ console.log('Submit new Name!')}}> Submit! </Button>
       </Grid>
-    <Grid item>
-      <Link to='/attendView'>
-          <Button onClick={()=>{ console.log('Clicked!')}}> Click Me! </Button>
-      </Link>
-    </Grid>
     </Grid>
     </>
   )
