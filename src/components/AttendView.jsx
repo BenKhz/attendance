@@ -1,17 +1,17 @@
 import React, {useState} from 'react';
-import {Button, Grid, Switch} from '@mui/material'
+import {Button, Grid, Switch, Box} from '@mui/material'
 import Selector from './Selector.jsx';
 
 const AttendView = ({currentEnroll, setEnroll}) => {
   const [present, setPresent] = useState([]);
-  const attendSwitches = currentEnroll.map(each => {
+  const attendSwitches = currentEnroll.map(student => {
     return (
-      <>
-      <div>
-        {each}
-      </div>
-      <Switch />
-      </>
+      <Box sx={{display:'flex', flexDirection:'row', alignItems:"center"}} key={student.id}>
+        <div>
+          {`${student.first_name} ${student.last_name}`}
+        </div>
+        <Switch />
+      </Box>
     )
   })
   return (

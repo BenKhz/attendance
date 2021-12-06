@@ -4,14 +4,14 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { SentimentNeutralOutlined } from '@mui/icons-material';
 
-const CohortMenu = ({ selectObj, updateSelect, setEnroll }) => {
+const CohortMenu = ({ selectObj, updateSelect, setEnroll, campuses, cohorts }) => {
 
-  useEffect(() => { console.log("Axios request should query cohorts and campuses") }, [])
   useEffect(() => {
     if(selectObj.campus && selectObj.cohort) {
-      console.log(" Use Select Obj to fire axios and use setEnroll on response.")
+      axios.get('/enroll', {params: selectObj})
+      .then(res => { setEnroll(res.data)})
+      .catch(err => { console.error(err)})
     }
-    setEnroll(["Enroll data dummy 1", "Enroll data dummy 2"])
   }, [selectObj])
 
   return (
@@ -31,14 +31,8 @@ const CohortMenu = ({ selectObj, updateSelect, setEnroll }) => {
             onChange={(e) => { updateSelect({ ...selectObj, 'campus': e.target.value }) }}
             label="campusSelectDrop"
             value={selectObj.campus || ''}
-            sx={{ minWidth: '120px' }}
-          >
-            <MenuItem value="">
-              <em>Campus</em>
-            </MenuItem>
-            <MenuItem value={"hrlax"}>HR-LAX</MenuItem>
-            <MenuItem value={"hrden"}>HR-DEN</MenuItem>
-            <MenuItem value={"hrsf"}>HR-SF</MenuItem>
+            sx={{ minWidth: '120px' }} >
+              {campuses.map(campus => <MenuItem value={campus.id} key={campus.id}>{campus.campus}</MenuItem>)}
           </Select>
 
       </Box>
@@ -58,12 +52,7 @@ const CohortMenu = ({ selectObj, updateSelect, setEnroll }) => {
             value={selectObj.cohort || ''}
             sx={{ minWidth: '120px' }}
           >
-            <MenuItem value="">
-              <em>Cohort</em>
-            </MenuItem>
-            <MenuItem value={"47/48"}>47 and 48</MenuItem>
-            <MenuItem value={"46/47"}>46 and 47</MenuItem>
-            <MenuItem value={"45/46"}>45 and 46</MenuItem>
+            {cohorts.map(cohort => <MenuItem value={cohort.id} key={cohort.id}>{cohort.cohort}</MenuItem>)}
           </Select>
 
       </Box>
