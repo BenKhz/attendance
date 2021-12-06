@@ -18,14 +18,23 @@ app.get('/test', (req, res) => {
 })
 
 // Begin DB interation routes
+app.get('/cohorts', (req, res) => {
+  dbUtils.getCohorts((err, result) => { err ? res.send(err) : res.send(result)})
+ })
+
+app.get('/campuses', (req, res) => {
+  dbUtils.getCampuses((err, result) => { err ? res.send(err) : res.send(result)})
+ })
+
 app.get('/enroll', (req, res) => { // SELECT * from enrollment table.
+
   dbUtils.getEnrollment((err, result) => {
     err ? console.log(err) : res.send(result.map(entry => {
       entry.date = null;
       entry.time = null;
       return entry
     }));
-  })
+  }, req.query)
 })
 
 app.post('/enroll', (req, res) => { // Should add record to enrollment table
