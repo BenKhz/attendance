@@ -16,13 +16,16 @@ import {
 const App = () => {
   const theme = createTheme();
   const [isLoggedIn, setLoggedIn] = useState(null);
-  const [currentEnroll, setEnroll] = useState(["enroll default1", 'enroll default2'])
+  const [currentEnroll, setEnroll] = useState([])
   const [selectObj, updateSelect] = useState({});
 
   useEffect(()=>{
-    console.log("Login is null, should mimic auth check to true in 1 second, Disable setTimeout in App")
-    // setTimeout(()=>{Math.random() > 0.5 ? setLoggedIn(true) : setLoggedIn(false)}, 1000)
-    setTimeout(()=>{setLoggedIn(true)}, 2000)
+    console.warn("Currently using setTimout to mimic auth check and login state.")
+    setTimeout(() => {
+      setLoggedIn(false);
+      console.log("isLogged set to False")}, 1000)
+    setTimeout(()=>{setLoggedIn(true);
+      console.log("isLoggedIn set to True")}, 2000)
   }, [])
 
   return (
@@ -33,8 +36,8 @@ const App = () => {
         <Routes>
           <Route path='/' element={<Home isLoggedIn={isLoggedIn} updateSelect={updateSelect} selectObj={selectObj} setEnroll={setEnroll} />} />
           <Route path='/login' element={<Login setLoggedIn={setLoggedIn} isLoggedIn={isLoggedIn}/>} />
-          <Route path='/attendView' element={<AttendView currentEnroll={currentEnroll} setEnroll={setEnroll}/>} />
-          <Route path='/enrollView' element={<EnrollView currentEnroll={currentEnroll}/>} />
+          <Route path='/attendView' element={<AttendView currentEnroll={currentEnroll} />} />
+          <Route path='/enrollView' element={<EnrollView currentEnroll={currentEnroll} selectObj={selectObj}/>} />
         </Routes>
       </BrowserRouter>
       </ThemeProvider>

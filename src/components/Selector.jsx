@@ -10,10 +10,10 @@ import { Link } from 'react-router-dom';
 
 export default function BasicSpeedDial(props) {
   const actions = [
-    // { icon: <SaveAltIcon />, name: 'Push To DB', to: '/', onClick: props.handlePush },
+    { icon: <SaveAltIcon />, name: 'Push To DB', to: '#', onClick: ()=>{console.warn("TODO: Push to DB handler")} },
     // { icon: <SaveAltIcon />, name: 'Reset', to: '/', onClick: () => {props.resetStart(); props.resetAttend()} },
-    { icon: <ListAltIcon />, name: 'View Attendance Tools', to: '/attendView', onClick: () => {console.log('clicked')}},
-    { icon: <PlaylistAddIcon />, name: 'View Enrollment Tools', to: '/enrollView', onClick: () => {console.log('clicked')}},
+    { icon: <ListAltIcon />, name: 'View Attendance Tools', to: '/attendView', onClick: () => {console.warn('Additional onClick logic here. Remove if unused.')}},
+    { icon: <PlaylistAddIcon />, name: 'View Enrollment Tools', to: '/enrollView', onClick: () => {console.warn('Additional onClick logic here. Remove if unused.')}},
   ];
   return (
     <div className="dial">
