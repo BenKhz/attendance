@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, Checkbox, Box, FormControlLabel, FormGroup } from '@mui/material'
+import { Grid, Checkbox, FormControlLabel, FormGroup } from '@mui/material'
 import Selector from './Selector.jsx';
 
 const AttendView = ({ currentEnroll }) => {
@@ -20,7 +20,7 @@ const AttendView = ({ currentEnroll }) => {
         control={<Checkbox
           name={student.first_name}
           value={student.last_name}
-          id={`student.id`}
+          id={student.id.toString()}
           onChange={(e) => {
             // TODO REFACTOR for Readability
             let checkIns = present

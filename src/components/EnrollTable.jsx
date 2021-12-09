@@ -1,34 +1,40 @@
-import * as React from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import React, { useState } from 'react';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Checkbox } from '@mui/material'
 
-export default function BasicTable({rows}) {
+export default function EnrollTable({ rows }) {
+  const [selected, setSelected] = useState([]);
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+      <Table sx={{ minWidth: 300 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>First Name</TableCell>
-            <TableCell align="right">Last Name</TableCell>
-            <TableCell align="right"> Cohort No.</TableCell>
+            <TableCell align="center">Selected</TableCell>
+            <TableCell align="center">First Name</TableCell>
+            <TableCell align="center">Last Name</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
             <TableRow
-              key={row.name}
+              key={row.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
+              <TableCell align="center">
+                <Checkbox id={row.id.toString()} onChange={(e) => {
+                  var isIncludedIndex = selected.indexOf(row);
+                  if (isIncludedIndex !== -1) {
+                    var newArray = selected;
+                    newArray.splice(isIncludedIndex, 1);
+                    setSelected(newArray);
+                  } else {
+                    setSelected([...selected, row])
+                  }
+                }} />
+              </TableCell>
               <TableCell component="th" scope="row">
                 {row.first_name}
               </TableCell>
-              <TableCell align="right">{row.last_name}</TableCell>
-              <TableCell align="right">{row.id}</TableCell>
+              <TableCell align="center">{row.last_name}</TableCell>
             </TableRow>
           ))}
         </TableBody>
