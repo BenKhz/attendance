@@ -1,10 +1,25 @@
 import React from 'react';
 import { Button, Grid, Typography, TextField } from '@mui/material'
+import axios from 'axios';
 import Selector from './Selector.jsx';
 import EnrollTable from './EnrollTable.jsx'
 
 const EnrollView = ({ currentEnroll, selectObj }) => {
-  const [campus, cohort] = Object.values(selectObj);
+  const {campus, cohort} = selectObj;
+  const addStudent = () => {
+    var first = document.getElementById('first_name');
+    var last = document.getElementById('last_name');
+    var payload = {
+      campus_id: campus,
+      cohort_id: cohort,
+      first_name: first.value,
+      last_name: last.value,
+    }
+    first.value = '';
+    last.value = '';
+    axios.post('/enroll', payload)
+    .then(res => console.log("Response from server: ", res.data))
+  }
   return (
     <>
       <Selector />
@@ -20,7 +35,7 @@ const EnrollView = ({ currentEnroll, selectObj }) => {
               required
               name="last_name"
               label="Last Name"
-              id="password"
+              id="last_name"
             />
             <TextField
               margin="normal"
@@ -29,11 +44,11 @@ const EnrollView = ({ currentEnroll, selectObj }) => {
               label="First Name"
               id="first_name"
             />
-            <Button onClick={() => { console.log('Submit new Name!') }}> Submit! </Button>
+            <Button onClick={addStudent}> Submit! </Button>
           </Grid>
         </Grid>
         <Grid item >
-          <EnrollTable rows={currentEnroll} />
+          <EnrollTable rows={currentEnroll} campus_id={campus} cohort_id={cohort} />
         </Grid>
       </Grid>
     </>

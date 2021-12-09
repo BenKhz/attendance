@@ -2,12 +2,14 @@ const path = require('path');
 const express = require('express');
 const dbUtils = require('./db/utils')
 const servUtils = require('./utils');
+const db = require('./db');
 require('dotenv').config()
 const PORT = process.env.PORT || 3000;
 
 const app = express();
 
 // Middleware
+app.use(express.json());
 app.use(servUtils.log);
 app.use(express.static('dist'));
 
@@ -38,9 +40,7 @@ app.get('/enroll', (req, res) => { // SELECT * from enrollment table.
 })
 
 app.post('/enroll', (req, res) => { // Should add record to enrollment table
-  console.log(req.data)
-  console.log("Should Insert records into enrollment table")
-  res.send("POST to enroll endpoint")
+  dbUtils.addEnrollment(req.body, (err, result) => { err ? res.send(err) : res.send(result) })
 })
 
 app.get('/attend', (req, res) => { // Should Select all attendance from todays date.

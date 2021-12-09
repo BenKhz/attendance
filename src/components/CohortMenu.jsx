@@ -45,7 +45,6 @@ const CohortMenu = ({ selectObj, updateSelect, setEnroll, campuses, cohorts }) =
       }}>
         <Typography className="blur-out-expand"> and Cohort </Typography>
           <Select
-            // labelId="cohortSelect"
             id="cohortSelectControl"
             onChange={(e) => { updateSelect({ ...selectObj, 'cohort': e.target.value }) }}
             label="cohortSelectDrop"
