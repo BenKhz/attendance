@@ -20,12 +20,12 @@ const App = () => {
   const [selectObj, updateSelect] = useState({});
 
   useEffect(()=>{
-    console.warn("Currently using setTimout to mimic auth check and login state.")
+    console.warn("Currently using setTimout to mimic session check and login state.")
     setTimeout(() => {
       setLoggedIn(false);
       console.log("isLogged set to False")}, 1000)
-    setTimeout(()=>{setLoggedIn(true);
-      console.log("isLoggedIn set to True")}, 2000)
+    // setTimeout(()=>{setLoggedIn(true);
+    //   console.log("isLoggedIn set to True")}, 2000)
   }, [])
 
   return (

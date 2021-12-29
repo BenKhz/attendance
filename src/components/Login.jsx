@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import axios from 'axios';
 import {
   Button,
   TextField,
@@ -16,12 +17,14 @@ export default function Login({isLoggedIn, setLoggedIn}) {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    setLoggedIn(prev => !prev);
-    console.log({
+    axios.post(isSignup ? '/signup' : '/login', {
       email: data.get('email'),
       password: data.get('password'),
-    });
+    }).then(response => {
+      response.status === 200 ? setLoggedIn(prev => !prev) : console.log("Unsuccessful login / signup")
+    })
   };
+
   if(isLoggedIn){
     return <Navigate to='/'/>
   }
