@@ -1,9 +1,11 @@
 const path = require('path');
 const express = require('express');
+const session = require('express-session');
+const passport = require('passport')
+const LocalStategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
 const dbUtils = require('./db/utils')
-const servUtils = require('./utils');
-const db = require('./db');
+const authUtils = require('./db/authUtils')
 require('dotenv').config()
 const PORT = process.env.PORT || 3000;
 
@@ -11,7 +13,25 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-// app.use(servUtils.log);
+app.use(session({
+  secret: "secret",
+  resave: false,
+  saveUninitialized: true,
+}))
+app.use(passport.initialize())
+app.use(passport.session());
+passport.use(new LocalStategy(authUtils.authUser));
+passport.serializeUser((user, done) => {
+  console.log(`--------> Serialize User`)
+  console.log(user)
+  done(null, user.id)
+})
+passport.deserializeUser((id, done) => {
+  console.log("---------> Deserialize Id")
+  console.log(id)
+  done (null, {name: "Kyle", id: 123} )
+})
+
 app.use(express.static('dist'));
 
 app.post('/signup', (req, res) => { // Add a new username, salt, and hashed pass if no username exists
@@ -34,19 +54,10 @@ app.post('/signup', (req, res) => { // Add a new username, salt, and hashed pass
     }
   })
 })
-app.post('/login', (req, res) => { //
-  const {email, password} = req.body;
-  console.log("USER ", email)
-  dbUtils.getHashedPass(email, (err, hashedPass) => {
-    if (err) { res.status(500).send(err) }
-    else{
-      bcrypt.compare(password, hashedPass[0].hash, (err, success) => {
-        if (err) { res.status(500).send(err) }
-        res.status(success ? 200:401).send()
-      })
-    }
-  })
-})
+app.post('/login', passport.authenticate('local', {
+  failureMessage: "Fail",
+  successMessage: "success"
+}))
 
 // Begin DB interation routes
 app.get('/cohorts', (req, res) => {

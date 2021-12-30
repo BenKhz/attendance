@@ -9,7 +9,6 @@ import '@testing-library/jest-dom';
 beforeAll(()=>{
 
 })
-// afterAll(cleanup)
 
  test('use jsdom in this test file', () => {
   console.log("in usejsdom")
