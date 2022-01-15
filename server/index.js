@@ -1,15 +1,14 @@
 const path = require('path');
 const express = require('express');
+const app = express();
 const session = require('express-session');
-const passport = require('passport')
-const LocalStategy = require('passport-local').Strategy;
-const bcrypt = require('bcrypt');
-const dbUtils = require('./db/utils')
-const authUtils = require('./db/authUtils')
+const ws = require('ws')
+
+const dbUtils = require('./db/utils');
+const { AirlineSeatReclineExtraTwoTone } = require('@mui/icons-material');
 require('dotenv').config()
 const PORT = process.env.PORT || 3000;
 
-const app = express();
 
 // Middleware
 app.use(express.json());
@@ -18,46 +17,17 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
 }))
-app.use(passport.initialize())
-app.use(passport.session());
-passport.use(new LocalStategy(authUtils.authUser));
-passport.serializeUser((user, done) => {
-  console.log(`--------> Serialize User`)
-  console.log(user)
-  done(null, user.id)
-})
-passport.deserializeUser((id, done) => {
-  console.log("---------> Deserialize Id")
-  console.log(id)
-  done (null, {name: "Kyle", id: 123} )
-})
 
 app.use(express.static('dist'));
 
-app.post('/signup', (req, res) => { // Add a new username, salt, and hashed pass if no username exists
-  const { email, password } = req.body;
-  dbUtils.checkUsername(email, (err, result) => {
-    if (err) {
-      res.set(301).send(err)
-    } else if (result.length) {
-      res.status(401).send("Username Taken")
-    } else {
-      bcrypt.genSalt(3, function (err, salt) {
-        bcrypt.hash(password, salt, function (err, hash) {
-          if (err) { res.set(403).send(err) }
-          else {
-            const options = { username: email, salt, hash }
-            dbUtils.addAccount(options, (err, success) => { err ? res.send(err) : res.set(200).send(success) })
-          }
-        });
-      });
-    }
-  })
+app.post('/webhook', (req, res) => {
+  var {user_name, date_time, email} = req.body.payload.object.participant;
+  var attendee = {user_name, date_time, email}
+  console.log("Webhook recieved!")
+  wss.emit('hook', wss.clients, attendee)
+  res.status(200).send("Posted to /webhook!")
 })
-app.post('/login', passport.authenticate('local', {
-  failureMessage: "Fail",
-  successMessage: "success"
-}))
+
 
 // Begin DB interation routes
 app.get('/cohorts', (req, res) => {
@@ -110,6 +80,20 @@ app.patch('/attend', (req, res) => { // Perform a delete off of todays date, and
 
 
 // Initialize server
-app.listen(PORT, (err) => {
+var server = app.listen(PORT, (err) => {
   !err ? console.log(`Listening on port ${PORT}`) : console.error(err)
 })
+
+var wss = new ws.Server({server: server})
+wss.on('hook', (sockets, req) => {
+  sockets.forEach(socket => {
+    socket.send(JSON.stringify(req))
+  })
+})
+wss.on('connection', (ws) => {
+  console.log("Connection event!")
+})
+wss.on('message', (socket, req) => {
+  socket.send("recieved")
+})
+
