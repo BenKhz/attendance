@@ -1,28 +1,31 @@
 import React, {useState, useEffect} from 'react';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { CssBaseline } from '@mui/material'
 
 const App = () => {
-  const theme = createTheme();
+
   const [zoomWebHooks, setZoomWebHooks] = useState([])
   useEffect( () => {
-    const socket = new WebSocket('ws://127.0.0.1:3000');
+    // if served from secure connection, create secure websocket
+    var url = window.location.href.replace('https', 'wss').replace('http', 'ws');git
+    const socket = new WebSocket(url);
     socket.addEventListener('open', (event) => {
       socket.addEventListener('message', (e)=> {
-        setZoomWebHooks(prev =>  [...prev, JSON.parse(e.data)])
+        if(e.data !== "pong") {
+          setZoomWebHooks(prev =>  [...prev, JSON.parse(e.data)])
+        }
       })
     })
+    setInterval(() => {socket.send('ping')}, 10000)
   }, [])
-  var zoomWebHooksElems = [];
 
   return (
     <>
-    <CssBaseline />
-    <ThemeProvider theme={theme} >
+    {/* <CssBaseline /> */}
+    {/* <ThemeProvider theme={theme} > */}
       {/* <SpeedDial /> */}
+      <span> This is just for visibility</span>
       {zoomWebHooks.map(item => <div>{item.user_name}</div>)}
       {/* <AttendanceView /> */}
-    </ThemeProvider>
+    {/* </ThemeProvider> */}
    </>
   )
 }

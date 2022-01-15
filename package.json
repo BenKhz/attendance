@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build:dev": "webpack --watch",
+    "build": "webpack",
     "test": "jest",
     "start": "nodemon ./server/index.js"
   },
@@ -12,26 +12,16 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@emotion/react": "^11.6.0",
-    "@emotion/styled": "^11.6.0",
-    "@mui/icons-material": "^5.1.0",
-    "@mui/material": "^5.1.0",
     "axios": "^0.24.0",
-    "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
     "express-sessions": "^1.0.6",
-    "express-ws": "^5.0.2",
-    "mysql": "^2.18.1",
-    "passport": "^0.5.2",
-    "passport-google-oauth": "^2.0.0",
-    "passport-local": "^1.0.0",
+    "nodemon": "^2.0.15",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-router": "^6.0.2",
-    "react-router-dom": "^6.0.2",
-    "react-typewriter-effect": "^1.1.0"
+    "ws": "^8.4.2"
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",
