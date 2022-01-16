@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack",
+    "build:local": "webpack -w",
     "test": "jest",
     "start": "nodemon ./server/index.js"
   },
@@ -12,6 +13,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
+    "@mui/material": "^5.2.8",
     "axios": "^0.24.0",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
