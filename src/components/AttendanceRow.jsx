@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { TableRow, TableCell, Chip } from '@mui/material';
 import {useTheme} from '@mui/material/styles'
 
@@ -10,7 +10,6 @@ function AttendanceRow({student, dispatch}) {
       style={{transition: 'all 400ms', backgroundColor: student.present ? theme.palette.success.light : theme.palette.background.paper}}
       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
     >
-      {console.log("rendering Row")}
       <TableCell component="th" scope="row">
         {student.user_name}
       </TableCell>
