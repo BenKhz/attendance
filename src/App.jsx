@@ -1,13 +1,14 @@
-import React, { useEffect, useReducer, createContext } from 'react';
+import React, { useState, useEffect, useReducer, createContext } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from 'axios';
 
-import studentRoster from '../lib/hrlax4849'
-import storeReducer from './reducers/storeReducer.jsx';
 import AttendanceView from './components/AttendanceView.jsx';
-import socketInit from './utils/socketInit.js';
+import NavBar from './components/NavBar.jsx'
+import storeReducer from './reducers/storeReducer.jsx';
+import socketToStore from './utils/socketToStore.js';
 
 const initialStore = {
-  enrolled: studentRoster,
+  enrolled: [],
   unregistered: [],
 }
 
@@ -29,12 +30,19 @@ const theme = createTheme({
 export const StoreContext = createContext({store: {}, dispatch: ()=>{}});
 
 function App() {
+  var [enrolls, setEnrolls] = useState([]);
   const [store, dispatch] = useReducer(storeReducer, initialStore);
-  useEffect(() => { socketInit(store, dispatch) }, []);
+
+  useEffect(() => {
+    axios.get('/enroll').then(resp => setEnrolls(resp.data))
+    socketToStore(store, dispatch) }, []);
+
+  useEffect(()=>{dispatch({type:"POPULATE_ENROLLMENT", payload: enrolls})},[enrolls]);
 
   return (
       <ThemeProvider theme={theme}>
         <StoreContext.Provider value={{ store, dispatch }} >
+          <NavBar unregisteredCount={store.unregistered.length}/>
           <AttendanceView />
         </StoreContext.Provider>
       </ThemeProvider>

@@ -17,6 +17,12 @@ app.use(session({
 
 app.use(express.static('dist'));
 
+app.get('/enroll', (req, res) => {
+  var enroll = require('./lib/hrlax4849')
+  console.log(typeof enroll)
+  res.status(200).send(enroll)
+})
+
 app.post('/webhook', (req, res) => {
   var {user_name, date_time, email} = req.body.payload.object.participant;
   wss.emit('hook', wss.clients, {user_name, date_time, email})

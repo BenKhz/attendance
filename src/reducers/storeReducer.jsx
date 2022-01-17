@@ -19,6 +19,9 @@ export default (store, action) => {
       }
       student.date_time = new Date().toISOString();
       return { ...store };
+    case "POPULATE_ENROLLMENT":
+      store.enrolled = action.payload
+      return {...store}
     default:
       return store;
   }
