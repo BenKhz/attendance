@@ -10,6 +10,7 @@ import socketToStore from './utils/socketToStore.js';
 const initialStore = {
   enrolled: [],
   unregistered: [],
+  view: 'welcome'
 }
 
 const theme = createTheme({
@@ -43,7 +44,10 @@ function App() {
       <ThemeProvider theme={theme}>
         <StoreContext.Provider value={{ store, dispatch }} >
           <NavBar unregisteredCount={store.unregistered.length}/>
-          <AttendanceView />
+          {store.view === 'attendance' && <AttendanceView />}
+          {store.view === 'select' && <div>Select Placeholder</div>}
+          {store.view === 'account' && <div>Account Placeholder</div>}
+          {store.view === 'report' && <div>report Placeholder</div>}
         </StoreContext.Provider>
       </ThemeProvider>
   );

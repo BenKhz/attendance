@@ -22,6 +22,9 @@ export default (store, action) => {
     case "POPULATE_ENROLLMENT":
       store.enrolled = action.payload
       return {...store}
+    case "CHANGE_VIEW":
+      store.view = action.payload
+      return {...store}
     default:
       return store;
   }

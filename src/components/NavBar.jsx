@@ -1,9 +1,13 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 import { AppBar, Box, Toolbar, Typography, Button, Badge, IconButton } from '@mui/material';
+import NavDrawer from './NavDrawer.jsx';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 
 export default function ButtonAppBar({unregisteredCount}) {
+  const [isOpen, setOpen] = useState(false)
   return (
+    <>
+    <NavDrawer isOpen={isOpen} setOpen={setOpen}/>
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
@@ -11,6 +15,7 @@ export default function ButtonAppBar({unregisteredCount}) {
             size="large"
             edge="start"
             color="inherit"
+            onClick={()=> {setOpen(true)}}
             aria-label="menu"
             sx={{ mr: 2 }}
           >
@@ -25,5 +30,7 @@ export default function ButtonAppBar({unregisteredCount}) {
         </Toolbar>
       </AppBar>
     </Box>
+    </>
+
   );
 }
