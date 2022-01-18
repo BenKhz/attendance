@@ -2,8 +2,10 @@ import React, { useState, useEffect, useReducer, createContext } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 
-import AttendanceView from './components/AttendanceView.jsx';
 import NavBar from './components/NavBar.jsx'
+import AttendanceView from './components/AttendanceView.jsx';
+import SelectView from './components/SelectView.jsx';
+import ReportView from './components/ReportView.jsx';
 import storeReducer from './reducers/storeReducer.jsx';
 import socketToStore from './utils/socketToStore.js';
 
@@ -45,9 +47,9 @@ function App() {
         <StoreContext.Provider value={{ store, dispatch }} >
           <NavBar unregisteredCount={store.unregistered.length}/>
           {store.view === 'attendance' && <AttendanceView />}
-          {store.view === 'select' && <div>Select Placeholder</div>}
+          {store.view === 'select' && <SelectView />}
           {store.view === 'account' && <div>Account Placeholder</div>}
-          {store.view === 'report' && <div>report Placeholder</div>}
+          {store.view === 'report' && <ReportView />}
         </StoreContext.Provider>
       </ThemeProvider>
   );

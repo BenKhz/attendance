@@ -22,8 +22,9 @@ export default function ButtonAppBar({unregisteredCount}) {
             <MenuRoundedIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Hack Reactor LAX Attendance
+            Hack Reactor Attendance
           </Typography>
+
           <Badge badgeContent={unregisteredCount} color="warning">
             <Button color="inherit">Discrepancies</Button>
           </Badge>
