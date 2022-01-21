@@ -1,7 +1,10 @@
 const express = require('express');
 const app = express();
 const session = require('express-session');
-const ws = require('ws')
+const bcrypt = require('bcrypt');
+const servUtils = require('./utils.js')
+const dbUtils = require('./db/utils')
+const authUtils = require('./db/authUtils')
 const cors = require('cors')
 require('dotenv').config()
 const PORT = process.env.PORT || 3000;
@@ -32,18 +35,7 @@ app.post('/webhook', (req, res) => {
 var server = app.listen(PORT, (err) => {
   !err ? console.log(`Listening on port ${PORT}`) : console.error(err)
 })
-// Define Websockets Event listeners here.
-var wss = new ws.Server({server: server})
-wss.on('hook', (sockets, req) => {
-  sockets.forEach(socket => {
-    socket.send(JSON.stringify(req))
-  })
-})
-wss.on('connection', (socket) => {
-  socket.on('message', (msg) => {
-    socket.send("pong")
-  })
-  console.log("Connection event!")
-})
+// Initialize Web socket Server, define event handlers in servUtils.
+var wss = servUtils.createWsServer({server:server})
 
 
