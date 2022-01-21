@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useReducer, createContext } from 'react';
+import React, { useEffect, useReducer, createContext } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
-
 import NavBar from './components/NavBar.jsx'
 import AttendanceView from './components/AttendanceView.jsx';
 import SelectView from './components/SelectView.jsx';
@@ -33,25 +32,27 @@ const theme = createTheme({
 export const StoreContext = createContext({store: {}, dispatch: ()=>{}});
 
 function App() {
-  var [enrolls, setEnrolls] = useState([]);
-  const [store, dispatch] = useReducer(storeReducer, initialStore);
+  var [store, dispatch] = useReducer(storeReducer, initialStore);
 
   useEffect(() => {
-    axios.get('/enroll').then(resp => setEnrolls(resp.data))
-    socketToStore(store, dispatch) }, []);
+    socketToStore(store, dispatch)
+    axios.get('/enroll').then(resp => {dispatch({type:"POPULATE_ENROLLMENT", payload:resp.data})})
+     }, []);
 
-  useEffect(()=>{dispatch({type:"POPULATE_ENROLLMENT", payload: enrolls})},[enrolls]);
 
   return (
+    <React.StrictMode>
       <ThemeProvider theme={theme}>
         <StoreContext.Provider value={{ store, dispatch }} >
           <NavBar unregisteredCount={store.unregistered.length}/>
+          {/* Maybe Implement React Router here */}
           {store.view === 'attendance' && <AttendanceView />}
           {store.view === 'select' && <SelectView />}
           {store.view === 'account' && <div>Account Placeholder</div>}
           {store.view === 'report' && <ReportView />}
         </StoreContext.Provider>
       </ThemeProvider>
+    </React.StrictMode>
   );
 }
 

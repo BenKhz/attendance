@@ -23,8 +23,8 @@ app.get('/enroll', (req, res) => {
 })
 
 app.post('/webhook', (req, res) => {
-  var {user_name, date_time, email} = req.body.payload.object.participant;
-  wss.emit('hook', wss.clients, {user_name, date_time, email})
+  var {participant} = req.body.payload.object;
+  wss.emit('hook', wss.clients, participant)
   res.status(200).send("Posted to /webhook!")
 })
 
