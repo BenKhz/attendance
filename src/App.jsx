@@ -11,7 +11,7 @@ import socketToStore from './utils/socketToStore.js';
 const initialStore = {
   enrolled: [],
   unregistered: [],
-  view: 'welcome'
+  view: 'select'
 }
 
 const theme = createTheme({
@@ -46,9 +46,9 @@ function App() {
         <StoreContext.Provider value={{ store, dispatch }} >
           <NavBar unregisteredCount={store.unregistered.length}/>
           {/* Maybe Implement React Router here */}
-          {store.view === 'attendance' && <AttendanceView />}
-          {store.view === 'select' && <SelectView />}
           {store.view === 'account' && <div>Account Placeholder</div>}
+          {store.view === 'select' && <SelectView />}
+          {store.view === 'attendance' && <AttendanceView />}
           {store.view === 'report' && <ReportView />}
         </StoreContext.Provider>
       </ThemeProvider>

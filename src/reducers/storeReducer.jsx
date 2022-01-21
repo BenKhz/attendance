@@ -25,6 +25,15 @@ export default (store, action) => {
     case "CHANGE_VIEW":
       store.view = action.payload
       return {...store}
+    case "UPDATE_CAMPUS":
+      store.campus = action.payload;
+      return {...store}
+    case "UPDATE_COHORT_ONE":
+      store.cohortOne = action.payload;
+      return {...store}
+    case "UPDATE_COHORT_TWO":
+      store.cohortTwo = action.payload;
+      return {...store}
     default:
       return store;
   }
