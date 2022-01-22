@@ -1,18 +1,19 @@
-import React, {useEffect, useContext} from "react";
+import React, {useState,useEffect, useContext} from "react";
 import axios from 'axios';
 import { StoreContext } from "../App.jsx";
 import {Box, Select, InputLabel, MenuItem, FormControl } from '@mui/material';
 
 export default function () {
   const { store, dispatch } = useContext(StoreContext);
+  const [campuses, setCampuses] = useState([]);
 
   const updateCampus = (e) => {
     dispatch({type:"UPDATE_CAMPUS", payload:e.target.value})
   }
 
   useEffect(() => {
-    axios.get('/campus', (req, res) => {
-      console.log(res.data)
+    axios.get('/campuses', (req, res) => {
+      setCampuses(res.data)
     })
   }, [])
 
@@ -39,15 +40,15 @@ export default function () {
         <InputLabel id="campusSelect">Campus</InputLabel>
           <Select
             labelId="campusSelect"
-            onChange={(e) => {updateCampus(e)}}
-            value={store.campus}
+            // onChange={(e) => {updateCampus(e)}}
+            // value={store.campus}
             >
-            <MenuItem value={"HRLAX"}> Los Angeles </MenuItem>
-            <MenuItem value={"HRSF"}> San Francisco</MenuItem>
-            <MenuItem value={"HRDEN"}> Denver </MenuItem>
+            {campuses.map(each => {
+            console.log(each);
+            return <MenuItem value={each.campus}> {each.campus} </MenuItem>})}
           </Select>
       </FormControl>
-      <FormControl fullWidth sx={{marginBottom:'10px'}}>
+      {/* <FormControl fullWidth sx={{marginBottom:'10px'}}>
       <InputLabel id="cohortSelect1">Cohort</InputLabel>
           <Select
             labelId="cohortSelect1" mb={10} >
@@ -65,7 +66,7 @@ export default function () {
             <MenuItem > Placehold 1</MenuItem>
             <MenuItem > Placehold 1</MenuItem>
           </Select>
-      </FormControl>
+      </FormControl> */}
       </Box>
       </div>
   )
