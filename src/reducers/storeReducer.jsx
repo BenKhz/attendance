@@ -4,6 +4,7 @@ export default (store, action) => {
       var student = store.enrolled[action.idx]
       student.zoomVerified = true;
       student.present = true;
+      student.user_id = action.payload.user_id;
       student.date_time = action.payload.date_time
       return { ...store };
     case "UNREGISTERED_ZOOM_ATTENDEE":
