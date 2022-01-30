@@ -4,8 +4,9 @@ const session = require('express-session');
 const servUtils = require('./utils.js')
 // const bcrypt = require('bcrypt');
 // const dbUtils = require('./db/utils')
-// const authUtils = require('./db/authUtils')
-// const Campuses = require('./routes/campuses.js')
+const Auth = require('./routes/Auth.js')
+const Campuses = require('./routes/campuses.js')
+const Cohorts = require('./routes/cohorts.js')
 const cors = require('cors')
 require('dotenv').config()
 const PORT = process.env.PORT || 3000;
@@ -28,9 +29,9 @@ app.get('/enroll', (req, res) => {
 })
 
 // Uncomment when routes are finished.
-// app.use('/cohorts', Cohorts);
+app.use('/cohorts', Cohorts);
+app.use('/campuses', Campuses);
 // app.use('/attendace', Attendance);
-// app.use('/campuses', Campuses);
 // app.use('./webhooks', Webhooks);
 
 app.post('/webhook', (req, res) => {
