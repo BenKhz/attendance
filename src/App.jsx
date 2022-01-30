@@ -1,48 +1,59 @@
-import React, {useState, useEffect} from 'react';
+import React, { useEffect, useReducer, createContext } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { CssBaseline } from '@mui/material'
 import axios from 'axios';
-import AttendView from './components/AttendView.jsx';
-import EnrollView from './components/EnrollView.jsx';
-import Home from './components/Home.jsx';
-import Login from './components/Login.jsx';
+import NavBar from './components/NavBar.jsx'
+import AttendanceView from './components/AttendanceView.jsx';
+import SelectView from './components/SelectView.jsx';
+import ReportView from './components/ReportView.jsx';
+import storeReducer from './reducers/storeReducer.jsx';
+import socketToStore from './utils/socketToStore.js';
 
+const initialStore = {
+  enrolled: [],
+  unregistered: [],
+  view: 'select'
+}
 
-import {
-  BrowserRouter,
-  Routes,
-  Route } from "react-router-dom";
+const theme = createTheme({
+  palette: {
+    type: 'light',
+    primary: {
+      main: '#5893df',
+    },
+    secondary: {
+      main: '#2ec5d3',
+    },
+    background: {
+      default: '#192231',
+      paper: '#e4e8ae',
+    },
+  },
+});
+export const StoreContext = createContext({store: {}, dispatch: ()=>{}});
 
-const App = () => {
-  const theme = createTheme();
-  const [isLoggedIn, setLoggedIn] = useState(null);
-  const [currentEnroll, setEnroll] = useState([])
-  const [selectObj, updateSelect] = useState({});
+function App() {
+  var [store, dispatch] = useReducer(storeReducer, initialStore);
 
-  useEffect(()=>{
-    console.warn("Currently using setTimout to mimic auth check and login state.")
-    setTimeout(() => {
-      setLoggedIn(false);
-      console.log("isLogged set to False")}, 1000)
-    setTimeout(()=>{setLoggedIn(true);
-      console.log("isLoggedIn set to True")}, 2000)
-  }, [])
+  useEffect(() => {
+    socketToStore(store, dispatch)
+    axios.get('/enroll').then(resp => {dispatch({type:"POPULATE_ENROLLMENT", payload:resp.data})})
+     }, []);
+
 
   return (
-    <>
-    <CssBaseline />
-    <ThemeProvider theme={theme} >
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<Home isLoggedIn={isLoggedIn} updateSelect={updateSelect} selectObj={selectObj} setEnroll={setEnroll} />} />
-          <Route path='/login' element={<Login setLoggedIn={setLoggedIn} isLoggedIn={isLoggedIn}/>} />
-          <Route path='/attendView' element={<AttendView currentEnroll={currentEnroll} />} />
-          <Route path='/enrollView' element={<EnrollView currentEnroll={currentEnroll} selectObj={selectObj}/>} />
-        </Routes>
-      </BrowserRouter>
+    <React.StrictMode>
+      <ThemeProvider theme={theme}>
+        <StoreContext.Provider value={{ store, dispatch }} >
+          <NavBar unregisteredCount={store.unregistered.length}/>
+          {/* Maybe Implement React Router here */}
+          {store.view === 'account' && <div>Account Placeholder</div>}
+          {store.view === 'select' && <SelectView />}
+          {store.view === 'attendance' && <AttendanceView />}
+          {store.view === 'report' && <ReportView />}
+        </StoreContext.Provider>
       </ThemeProvider>
-   </>
-  )
+    </React.StrictMode>
+  );
 }
 
 export default App;

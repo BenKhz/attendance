@@ -5,3 +5,5 @@ package-lock.json
 .TODO
 dist/main.js
 *.sql
+notes.txt
+zoom*
