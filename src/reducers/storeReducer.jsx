@@ -5,7 +5,7 @@ export default (store, action) => {
       student.zoomVerified = true;
       student.present = true;
       student.user_id = action.payload.user_id;
-      student.date_time = action.payload.date_time
+      student.date_time = action.payload.join_time
       return { ...store };
     case "UNREGISTERED_ZOOM_ATTENDEE":
       store.unregistered.push(action.payload)

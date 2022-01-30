@@ -1,21 +1,31 @@
 import React, {useState,useEffect, useContext} from "react";
 import axios from 'axios';
 import { StoreContext } from "../App.jsx";
-import {Box, Select, InputLabel, MenuItem, FormControl } from '@mui/material';
+import {Box, Select, InputLabel, MenuItem, FormControl, Button } from '@mui/material';
 
 export default function () {
   const { store, dispatch } = useContext(StoreContext);
   const [campuses, setCampuses] = useState([]);
+  const [cohorts , setCohorts] = useState([])
 
-  const updateCampus = (e) => {
-    dispatch({type:"UPDATE_CAMPUS", payload:e.target.value})
+  const updateStore = (e) => {
+    if(e.target.name === "campus") {
+      dispatch({type:"UPDATE_CAMPUS", payload:e.target.value})
+    } else if (e.target.name === 'one') {
+      dispatch({type:"UPDATE_COHORT_ONE", payload:e.target.value})
+    } else if (e.target.name === 'two') {
+      dispatch({type:"UPDATE_COHORT_TWO", payload:e.target.value})
+    }
   }
 
   useEffect(() => {
-    axios.get('/campuses', (req, res) => {
-      setCampuses(res.data)
-    })
+    axios.get('/campuses').then(res => {setCampuses(res.data)} )
   }, [])
+
+  useEffect(() => {
+    const obj = {};
+    axios.get('/cohorts').then(res => { setCohorts(res.data)} )
+  }, [store.campus])
 
   return (
     <div style={{
@@ -40,34 +50,40 @@ export default function () {
         <InputLabel id="campusSelect">Campus</InputLabel>
           <Select
             labelId="campusSelect"
-            // onChange={(e) => {updateCampus(e)}}
-            // value={store.campus}
+            name="campus"
+            onChange={(e) => {updateStore(e)}}
+            value={store.campus || ''}
             >
-            {campuses.map(each => {
-            console.log(each);
-            return <MenuItem value={each.campus}> {each.campus} </MenuItem>})}
+            {campuses.map((each) => {
+            return <MenuItem value={each.id} key={each.id}> {each.campus} </MenuItem>})}
           </Select>
       </FormControl>
-      {/* <FormControl fullWidth sx={{marginBottom:'10px'}}>
-      <InputLabel id="cohortSelect1">Cohort</InputLabel>
+      <FormControl fullWidth sx={{marginBottom:'10px'}}>
+      <InputLabel id="cohortOneSelect">First Cohort</InputLabel>
           <Select
-            labelId="cohortSelect1" mb={10} >
-            <MenuItem value={1} > Cohort </MenuItem>
-            <MenuItem value={2} > Placehold 1</MenuItem>
-            <MenuItem value={3}> Placehold 1</MenuItem>
-          </Select>
-        </FormControl>
-      <FormControl fullWidth sx={{marginBottom:'10px'}} >
-        <InputLabel id="cohortSelect2">Cohort 2</InputLabel>
-          <Select
-            labelId="cohortSelect2"
+            name="one"
+            labelId="cohortOneSelect"
+            onChange={(e) => {updateStore(e)}}
+            value={store.cohortOne || ''}
             >
-            <MenuItem > Placehold 1</MenuItem>
-            <MenuItem > Placehold 1</MenuItem>
-            <MenuItem > Placehold 1</MenuItem>
+            {cohorts.map((each) => {
+            return <MenuItem value={each.id} key={each.id}> {each.cohort} </MenuItem>})}
           </Select>
-      </FormControl> */}
+      </FormControl>
+      <FormControl fullWidth sx={{marginBottom:'10px'}}>
+      <InputLabel id="cohortTwoSelect">Second Cohort</InputLabel>
+          <Select
+            name="two"
+            labelId="cohortTwoSelect"
+            onChange={(e) => {updateStore(e)}}
+            value={store.cohortTwo || ''}
+            >
+            {cohorts.map((each) => {
+            return <MenuItem value={each.id} key={each.id}> {each.cohort} </MenuItem>})}
+          </Select>
+      </FormControl>
       </Box>
+      <Button onClick={() => {dispatch({type:"CHANGE_VIEW", payload:"attendance"})}}>Take Attendance!</Button>
       </div>
   )
 }

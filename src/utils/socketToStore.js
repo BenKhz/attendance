@@ -8,7 +8,6 @@ export default function (store ,dispatchFunc) {
     socket.addEventListener('message', (e) => {
       if (e.data !== "pong") {
         var parsed = JSON.parse(e.data)
-
         var idx;
         var found = store.enrolled.find((student, ind) => {
           idx = ind;
