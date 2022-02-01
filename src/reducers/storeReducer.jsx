@@ -35,6 +35,9 @@ export default (store, action) => {
     case "UPDATE_COHORT_TWO":
       store.cohortTwo = action.payload;
       return {...store}
+    case "AUTHORIZE":
+      store.loggedIn = action.payload;
+      return {...store}
     default:
       return store;
   }

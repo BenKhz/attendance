@@ -11,5 +11,19 @@ module.exports = {
         })
       }
     })
+  },
+  checkUsername: (user, cb) => {
+    db.query(`SELECT * from users WHERE username = "${user}"`, (err, result) => {
+      err ? cb(err) : cb(null, result)
+    })
+  },
+  addAccount: (options, cb) => {
+    const {username, salt, hash} = options;
+    db.query(`INSERT INTO users (username, salt, hash) VALUES("${username}", "${salt}", "${hash}")`, (err, result) => { err ? cb(err):cb(null,result)})
+  },
+  getHashedPass: (user, cb) => {
+    return db.query(`SELECT salt, hash FROM users WHERE username = "${user}"`, (err, hashedPass) => {
+      err ? cb(err) : cb(null, hashedPass)
+    })
   }
 }

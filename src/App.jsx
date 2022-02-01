@@ -5,13 +5,15 @@ import NavBar from './components/NavBar.jsx'
 import AttendanceView from './components/AttendanceView.jsx';
 import SelectView from './components/SelectView.jsx';
 import ReportView from './components/ReportView.jsx';
+import AccountView from './components/AccountView.jsx'
 import storeReducer from './reducers/storeReducer.jsx';
 import socketToStore from './utils/socketToStore.js';
 
 const initialStore = {
   enrolled: [],
   unregistered: [],
-  view: 'select'
+  view: 'account',
+  loggedIn: false,
 }
 
 const theme = createTheme({
@@ -44,9 +46,9 @@ function App() {
     <React.StrictMode>
       <ThemeProvider theme={theme}>
         <StoreContext.Provider value={{ store, dispatch }} >
-          <NavBar unregisteredCount={store.unregistered.length}/>
+          {store.loggedIn && <NavBar unregisteredCount={store.unregistered.length}/>}
           {/* Maybe Implement React Router here */}
-          {store.view === 'account' && <div>Account Placeholder</div>}
+          {store.view === 'account' && <AccountView/>}
           {store.view === 'select' && <SelectView />}
           {store.view === 'attendance' && <AttendanceView />}
           {store.view === 'report' && <ReportView />}

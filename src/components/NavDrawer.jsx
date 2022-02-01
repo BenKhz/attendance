@@ -8,7 +8,7 @@ export default function NavDrawer({ isOpen, setOpen }) {
     ['Take Attendance', 'attendance'],
     ['Select Campus/Cohorts', 'select'],
     ['Generate Report', 'report'],
-    ['Account', 'account']].map((text, index) => (
+    ['Logout', 'account']].map((text, index) => (
       <ListItem button key={text[0]} onClick={() => { dispatch({ type: "CHANGE_VIEW", payload: text[1] }) }}>
         <ListItemText primary={text[0]} />
       </ListItem>

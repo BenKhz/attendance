@@ -31,6 +31,7 @@ app.get('/enroll', (req, res) => {
 // Uncomment when routes are finished.
 app.use('/cohorts', Cohorts);
 app.use('/campuses', Campuses);
+app.use('/auth', Auth);
 // app.use('/attendace', Attendance);
 // app.use('./webhooks', Webhooks);
 

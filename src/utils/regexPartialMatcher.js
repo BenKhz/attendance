@@ -17,6 +17,9 @@ export default function partialRegexMatcher (recordName, displayName) {
 //   ['[HRLAX49] Ben Bernardy', 'Ben Bernardy', 'full match with HRLAX prepend'],
 //   ['[HRLAX 49] Ben Bernardy', 'Ben Bernardy', 'HR prepended badge with whitespace'],
 //   ['[HRLAX49] Benji Bernardy', 'Ben (Benji) Bernardy', 'full match with preferred nickname in parens'],
+//   ['HRLAX-49 Ben Bernardy', "Ben Bernardy", "HRLAX prepended outside of square brackets"],
+//   ['HRLAX49 Ben Bernardy', "Ben Bernardy", "HRLAX prepended outside of square brackets with no hyphen"],
+//   ['HR-LA-49 Ben Bernardy', "Ben Bernardy", "HRLAX prepended outside of square brackets with multiple hyphens and no X"],
 //   ['[HR-LAX] Ben (Benji) Bernardy', 'ben (Benji) BeRnardy', 'preferred name included in display parens'],
 // ]
 // var failCases =[

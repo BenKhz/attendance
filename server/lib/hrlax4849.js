@@ -52,7 +52,7 @@ module.exports =
   },
   {
     cohort: 49,
-    user_name: "James Hogerty",
+    user_name: "James (Jimmy) Hogerty",
     email:	"jdhogerty@gmail.com"
   },
   {
@@ -87,7 +87,7 @@ module.exports =
   },
   {
     cohort: 49,
-    user_name: "Tiffanie Vu",
+    user_name: "Tiffany Vu",
     email:	"tiffanyv.330@gmail.com"
   },
   {

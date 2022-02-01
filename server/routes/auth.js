@@ -2,7 +2,7 @@ const router = require('express').Router();
 const controllers = require('../controllers/controllers.js')
 
 router
-  .get('/', controllers.getCampuses)
-  .post('/', controllers.addCampuses)
+  .post('/login', controllers.login)
+  .post('/signup', controllers.signUp)
 
 module.exports = router;
