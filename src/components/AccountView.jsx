@@ -13,6 +13,7 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import LogoCanvas from './LogoCanvas.jsx'
 
 function Copyright(props) {
   return (
@@ -50,7 +51,7 @@ export default function SignInSide() {
           xs={false}
           sm={4}
           md={7}
-          children={<div>React Three Fiber HR logo placeholder</div>}
+          children={<LogoCanvas />}
         />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={24} square>
           <Box
