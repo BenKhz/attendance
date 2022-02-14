@@ -11,14 +11,14 @@ const LogoCanvas = (props) => {
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(55, width / height, 1, 400);
 
-    camera.position.set(0, 0, 10);
+    camera.position.set(2, -1.5, 8);
     // camera.lookAt(0, 0, 0);
     scene.add(camera)
     const loader = new GLTFLoader();
     const light = new THREE.HemisphereLight(0xfff, 0xfff, 12);
     scene.add(light);
     const renderer = new THREE.WebGL1Renderer({ alpha: true, antialias: true });
-    const controls = new OrbitControls(camera,renderer.domElement)
+    // const controls = new OrbitControls(camera,renderer.domElement)
     renderer.setSize(width, height);
     document.getElementById('canvascontain').appendChild(renderer.domElement)
     const clock = new THREE.Clock();
@@ -34,9 +34,8 @@ const LogoCanvas = (props) => {
     const animate = (obj, cam) => {
       requestAnimationFrame( animate.bind(null, obj, cam) );
       obj.rotation.y += Math.PI * 0.002;
-      cam.position.y += (Math.cos(clock.getElapsedTime()*0.5)) * 0.05
-      console.log(Math.cos(clock.getElapsedTime()))
-      controls.update();
+      cam.position.y += (Math.cos(clock.getElapsedTime()*4)) * 0.005
+      // controls.update();
       renderer.render( scene, camera );
     }
    loading().then(resp => {

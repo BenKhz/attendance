@@ -5,3 +5,9 @@ html {
 ul {
   list-style: none;
 }
+
+#canvascontain {
+  background-image: url('./assets/Vector.png');
+  background-position: center;
+  background-size: cover;
+}
