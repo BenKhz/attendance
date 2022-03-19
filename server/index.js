@@ -24,7 +24,7 @@ app.use(express.static('dist'));
 
 // placeholder route for dummy data
 app.get('/enroll', (req, res) => {
-  var enroll = require('./lib/hrlax4849')
+  var enroll = require('./lib/enrollment.js')
   res.status(200).send(enroll)
 })
 
