@@ -6,4 +6,4 @@ package-lock.json
 dist/main.js
 *.sql
 notes.txt
-zoom*
+zoom_token*
