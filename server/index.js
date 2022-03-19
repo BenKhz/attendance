@@ -22,13 +22,12 @@ app.use(session({
 
 app.use(express.static('dist'));
 
-// placeholder route for dummy data
+// Get request to populate initial enrollment.
 app.get('/enroll', (req, res) => {
   var enroll = require('./lib/enrollment.js')
   res.status(200).send(enroll)
 })
 
-// Uncomment when routes are finished.
 app.use('/cohorts', Cohorts);
 app.use('/campuses', Campuses);
 app.use('/auth', Auth);
